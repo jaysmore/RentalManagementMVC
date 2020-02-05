@@ -1,0 +1,260 @@
+﻿@model IEnumerable<RentalManagement.ViewModel.ViewModel>
+@{
+    ViewBag.Title = "Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    else if (Session["userName"].ToString() != "admin")
+    {
+        Response.Redirect("~/User/Index");
+    }
+    else
+    {
+        <!-- Current Login status -->
+        <h6>
+            Logged in as:
+            <font color="#DF691A">
+                <b>
+                    @Session["userName"].ToString()
+                </b>
+            </font>
+        </h6>
+    }
+}
+<style>
+    th {
+        background-color: rgba(50, 115, 220, 0.15);
+        font-weight: bold;
+    }
+
+    td {
+        font-weight: bold;
+    }
+
+    .btn {
+        font-size: 12px
+    }
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice Reports</title>
+</head>
+<body>
+    <h3>Rental by Job Reports</h3>
+    <a href='@Url.Action("Index", "Reports")' class="btn btn-secondary">Back to reports</a>
+
+    <a href="javascript:window.print()" class="btn btn-secondary">Print</a>
+
+    <form asp-controller="Reports" asp-action="ByJobs">
+        <p>
+            <br />
+            Job ID : <input type="text" name="searchString" />
+            <input type="submit" value="Search" />
+        </p>
+    </form>
+
+
+    <table class="table table-hover table-bordered table-active table-primary">
+        <thead>
+            <tr>
+                <th>Category</th>
+                @for (int i = 1; i < Model.Count() + 1; i++)
+                {
+                    <th>
+                        @i
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    Buy/Rent:
+                </td>
+                @foreach (var item in Model)
+                {
+                    if (item.BuyRent)
+                    {
+                        <td>
+                            Rent
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            Buy
+                        </td>
+                    }
+
+                }
+            </tr>
+            <tr>
+                <td>
+                    Job:
+                </td>
+                @foreach (var item in Model)
+                {
+                    <td>
+                        @item.JobDesc
+                    </td>
+
+                }
+            </tr>
+            <tr>
+                <td>
+                    Is Job Active:
+                </td>
+                @foreach (var item in Model)
+                {
+                    if (item.DateReturned > DateTime.Now)
+                    {
+                        <td>
+                            Yes
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            No
+                        </td>
+                    }
+                }
+            </tr>
+
+            <tr>
+                <td>
+                    Date Received:
+                </td>
+                @foreach (var item in Model)
+                {
+                    <td>
+                        @item.DateReceived
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td>
+                    Date Returned:
+                </td>
+                @foreach (var item in Model)
+                {
+                    <td>
+                        @item.DateReturned
+                    </td>
+
+                }
+
+            </tr>
+            <tr>
+
+                <td>
+                    Category
+                </td>
+                @foreach (var item in Model)
+                {
+                    <td>
+                        @item.Category
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td>
+                    Model
+                </td>
+                @foreach (var item in Model)
+                {
+                    <td>
+                        @item.Model
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td>
+                    Manufacturer
+                </td>
+                @foreach (var item in Model)
+                {
+                    <td>
+                        @item.Make
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td>
+                    Serial Number
+                </td>
+                @foreach (var item in Model)
+                {
+                    <td>
+                        @item.SerialNum
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td>
+                    Vendor:
+                </td>
+                @foreach (var item in Model)
+                {
+                    <td>
+                        @item.salesPerson
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td>
+                    Address:
+                </td>
+                @foreach (var item in Model)
+                {
+                    <td>
+                        @item.address
+                    </td>
+
+                }
+            </tr>
+            <tr>
+                <td>
+                    Contact Info:
+                </td>
+                @foreach (var item in Model)
+                {
+                    <td>
+                        @item.contact
+                    </td>
+
+                }
+            </tr>
+            <tr>
+                <td>
+                    Rental Period From:
+                </td>
+                @foreach (var item in Model)
+                {
+                    <td>
+                        @item.RentalFrom
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td>
+                    Rental Period To:
+                </td>
+                @foreach (var item in Model)
+                {
+                    <td>
+                        @item.RentalTo
+                    </td>
+                }
+            </tr>
+        </tbody>
+    </table>
+
+
+</body>
+
+</html>

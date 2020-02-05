@@ -1,0 +1,83 @@
+﻿@model IEnumerable<RentalManagement.Models.Vendor>
+
+@{
+    ViewBag.Title = "Vendors";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    } else if(Session["userName"].ToString() != "admin") {
+        Response.Redirect("~/User/Index");
+    }
+    else
+    {
+        <!-- Current Login status -->
+        <h6>
+            Logged in as:
+            <font color="#DF691A">
+                <b>
+                    @Session["userName"].ToString()
+                </b>
+            </font>
+        </h6>
+    }
+}
+
+<h3>Vendors</h3>
+<style>
+    th {
+        background-color: rgba(50, 115, 220, 0.15);
+    }
+</style>
+<p>
+    @Html.ActionLink("Create new vendor", "Create")
+</p>
+<form asp-controller="Vendors" asp-action="Index">
+    <p>
+        Vendor ID : <input type="text" name="searchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<table class="table table-bordered table-hover table-active table-primary">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.vendorID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.salesPerson)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.contact)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.vendorID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.salesPerson)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.contact)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.vendorID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.vendorID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.vendorID })
+            </td>
+        </tr>
+    }
+
+</table>

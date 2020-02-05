@@ -1,0 +1,51 @@
+﻿@model IEnumerable<RentalManagement.Models.Rental>
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    else
+    {
+        <!-- Current Login status -->
+        <h6>
+            Logged in as:
+            <font color="#DF691A">
+                <b>
+                    @Session["userName"].ToString()
+                </b>
+            </font>
+        </h6>
+    }
+}
+<style>
+    th {
+        background-color: rgba(50, 115, 220, 0.15);
+    }
+</style>
+<h2> Rentals</h2>
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.rentalID)</th>
+        <th>@Html.DisplayNameFor(model => model.receiveDate)</th>
+        <th>@Html.DisplayNameFor(model => model.returnDate)</th>
+        <th>@Html.DisplayNameFor(model => model.buyRent)</th>
+        <th>@Html.DisplayNameFor(model => model.receiveDoc)</th>
+        <th>@Html.DisplayNameFor(model => model.returnDoc)</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.rentalID)</td>
+            <td>@Html.DisplayFor(modelItem => item.receiveDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.returnDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.buyRent)</td>
+            <td>@Html.DisplayFor(modelItem => item.receiveDoc)</td>
+            <td>@Html.DisplayFor(modelItem => item.returnDoc)</td>
+
+        </tr>
+    }
+</table>
+

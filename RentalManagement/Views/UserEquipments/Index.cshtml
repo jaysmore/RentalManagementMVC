@@ -1,0 +1,67 @@
+﻿@model IEnumerable<RentalManagement.Models.Equipment>
+@{
+Layout = "~/Views/Shared/_UserLayout.cshtml";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    else
+    {
+        <!-- Current Login status -->
+        <h6>
+            Logged in as:
+            <font color="#DF691A">
+                <b>
+                    @Session["userName"].ToString()
+                </b>
+            </font>
+        </h6>
+    }
+}
+<style>
+    th {
+        background-color: rgba(50, 115, 220, 0.15);
+    }
+</style>
+<h2> Equipments</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.equipmentID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.make)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.serialNum)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.equipmentID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.make)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.serialNum)
+            </td>
+        </tr>
+    }
+</table>

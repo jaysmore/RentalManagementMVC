@@ -1,0 +1,117 @@
+﻿@model IEnumerable<RentalManagement.Models.Invoice>
+
+@{
+    ViewBag.Title = "Invoices";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    else if (Session["userName"].ToString() != "admin")
+    {
+        Response.Redirect("~/User/Index");
+    }
+    else
+    {
+        <!-- Current Login status -->
+        <h6>
+            Logged in as:
+            <font color="#DF691A">
+                <b>
+                    @Session["userName"].ToString()
+                </b>
+            </font>
+        </h6>
+    }
+}
+
+<h3>Invoices</h3>
+<style>
+    th {
+        background-color: rgba(50, 115, 220, 0.15);
+    }
+</style>
+<p>
+    @Html.ActionLink("Create new invoice", "Create")
+</p>
+
+<form asp-controller="Invoices" asp-action="Index">
+    <p>
+        Invoice ID : <input type="text" name="searchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<table class="table table-bordered table-hover table-active table-primary">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.invoiceNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Job.JobTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Job.fromDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Job.untilDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rental.buyRent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vendor.salesPerson)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipment.category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.amount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.invoiceNum)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Job.JobTitle)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Job.fromDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Job.untilDate)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Rental.buyRent)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Vendor.salesPerson)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Equipment.category)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.amount)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.invoiceID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.invoiceID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.invoiceID })
+    </td>
+</tr>
+    }
+
+</table>
+
+@Html.ActionLink("-", "Game", "Invoices")
+
+
+
+

@@ -1,0 +1,115 @@
+﻿@model IEnumerable<RentalManagement.Models.Equipment>
+
+@{
+    ViewBag.Title = "Equipments";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    else if (Session["userName"].ToString() != "admin")
+    {
+        Response.Redirect("~/User/Index");
+    }
+    else
+    {
+        <!-- Current Login status -->
+        <h6>
+            Logged in as:
+            <font color="#DF691A">
+                <b>
+                    @Session["userName"].ToString()
+                </b>
+            </font>
+        </h6>
+    }
+}
+
+<h3>Equipments</h3>
+<style>
+    th {
+        background-color: rgba(50, 115, 220, 0.15);
+    }
+</style>
+<div id="piechart"></div>
+<p>
+    <br />
+
+    @Html.ActionLink("Create new equipment", "Create")
+</p>
+<form asp-controller="Equipments" asp-action="Index">
+    <p>
+        Equipment ID : <input type="text" name="searchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<table class="table table-bordered table-hover table-active table-primary">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.equipmentID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.make)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.serialNum)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.equipmentID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.make)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.serialNum)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.equipmentID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.equipmentID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.equipmentID })
+            </td>
+        </tr>
+    }
+
+</table>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Overview', 'Equipments'],
+                ['Cars',  @Model.Where(x => x.category == "Car").Count()],
+                ['House',  @Model.Where(x => x.category == "House").Count()],
+                ['Property',  @Model.Where(x => x.category == "Property").Count()]
+            ]);
+
+            var options = { 'title': 'Equipments Overview'};
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+
+        }
+
+</script>

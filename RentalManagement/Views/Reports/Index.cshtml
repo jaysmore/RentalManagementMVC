@@ -1,0 +1,40 @@
+﻿@using RentalManagement.ViewModel
+@{
+    ViewBag.Title = "Reports";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    } else if(Session["userName"].ToString() != "admin") {
+        Response.Redirect("~/User/Index");
+    }
+    else
+    {
+        <!-- Current Login status -->
+        <h6>
+            Logged in as:
+            <font color="#DF691A">
+                <b>
+                    @Session["userName"].ToString()
+                </b>
+            </font>
+        </h6>
+    }
+}
+<h3>Reports</h3>
+
+@using (Html.BeginForm("getSelectedValue", "Reports", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.DropDownList("ReportOptions", new List<SelectListItem>
+   {
+   new SelectListItem { Text="Select report option", Value = "0"},
+       new SelectListItem { Text="Rental by Job Report", Value = "1"},
+   new SelectListItem { Text="Rental by Equipment Report", Value = "2"},
+   new SelectListItem { Text="Rental by Vendor Report", Value = "3"}
+
+   }, new { @class = "form-control" })
+    <br />
+    <input type="submit" value="Submit" />
+
+}
+
+

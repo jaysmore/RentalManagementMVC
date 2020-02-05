@@ -1,0 +1,83 @@
+﻿@model RentalManagement.Models.Rental
+
+@{
+    ViewBag.Title = "Details";
+   
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Rental</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.receiveDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.receiveDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.receiveHr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.receiveHr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.returnDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.returnDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.returnHr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.returnHr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.buyRent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.buyRent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.receiveDoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.receiveDoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.returnDoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.returnDoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.rentalRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.rentalRate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.rentalID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

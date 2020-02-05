@@ -1,0 +1,50 @@
+﻿@model RentalManagement.Models.Junction
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Junction</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Equipment.category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Equipment.category)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Job.jobID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Job.jobID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rental.receiveDoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rental.receiveDoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vendor.salesPerson)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vendor.salesPerson)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

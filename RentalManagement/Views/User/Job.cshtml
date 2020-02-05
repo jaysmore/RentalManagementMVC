@@ -1,0 +1,25 @@
+﻿@model RentalManagement.Models.Job
+@{
+    ViewBag.Title = "Jobs";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    else
+    {
+        <h3>Logged in as: @Session["userName"].ToString()</h3>
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Applicable Jobs</title>
+</head>
+<body>
+    <div> 
+    </div>
+</body>
+</html>

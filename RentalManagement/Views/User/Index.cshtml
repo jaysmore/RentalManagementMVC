@@ -1,0 +1,143 @@
+﻿@model RentalManagement.ViewModel.ViewModel
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    else
+    {
+        <!-- Current Login status -->
+        <h6>
+            Logged in as:
+            <font color="#DF691A">
+                <b>
+                    @Session["userName"].ToString()
+                </b>
+            </font>
+        </h6>
+    }
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Dashboard</title>
+</head>
+<body>
+    <div>
+        <h3>Dashboard</h3>
+        <a href="@Url.Action("LogOut", "Login")">Logout</a>
+
+    </div>
+
+    <div class="container">
+
+        <div class="panel pull-left" style="width : 50%">
+            <div id="piechart"></div>
+        </div>
+
+        <div class="panel pull-right" style="width : 50%">
+            <p>
+                <b>
+                    Ongoing Jobs
+                </b>
+            </p>
+            <table class="table table-hover table-condensed table-hover">
+                <thread>
+                    <tr>
+                        <th hidden>
+                            Job ID
+                        </th>
+                        <th>
+                            Job Description
+                        </th>
+                        <th>
+                            Due Date
+                        </th>
+
+                    </tr>
+
+                </thread>
+                <tbody>
+                    @foreach (var x in Model.Jobs.Where(x => x.untilDate > DateTime.Now))
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => x.JobTitle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => x.untilDate)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div>
+        <h3> Yearly Rental Performance</h3>
+        <div id="barchart_material" style="width: 50%; height: 500px;"></div>
+    </div>
+
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Overview', 'Top 5 Manufacturers'],
+                ['Jobs',  @Model.Jobs.ToArray().Count()],
+                ['Rentals',  @Model.Rentals.ToArray().Count()],
+                ['Vendors',  @Model.Vendors.ToArray().Count()],
+                ['Equipments',  @Model.Equipments.ToArray().Count()]
+            ]);
+
+            var options = { 'title': 'Management Overview'};
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+
+        }
+
+    </script>
+
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['bar'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Year','Rentals'],
+                ['2017', @Model.Rentals.Where(x => x.receiveDate.ToString().Contains("2017")).Count()],
+                ['2018', @Model.Rentals.Where(x => x.receiveDate.ToString().Contains("2018")).Count()],
+                ['2019', @Model.Rentals.Where(x => x.receiveDate.ToString().Contains("2019")).Count()],
+                ['2020', @Model.Rentals.Where(x => x.receiveDate.ToString().Contains("2020")).Count()]
+            ]);
+
+            var options = {
+                chart: {
+
+                    subtitle: 'Rentals: 2017-2020',
+                },
+                bars: 'vertical '
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+    </script>
+
+</body>
+</html>

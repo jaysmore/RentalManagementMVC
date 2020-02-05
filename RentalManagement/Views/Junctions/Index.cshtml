@@ -1,0 +1,51 @@
+﻿@model IEnumerable<RentalManagement.Models.Junction>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Equipment.category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Job.jobID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rental.receiveDoc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vendor.salesPerson)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Equipment.category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Job.jobID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rental.receiveDoc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vendor.salesPerson)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

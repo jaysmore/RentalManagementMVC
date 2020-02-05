@@ -1,0 +1,75 @@
+﻿@model IEnumerable<RentalManagement.Models.Job>
+
+@{
+    ViewBag.Title = "Jobs";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    } else if(Session["userName"].ToString() != "admin") {
+        Response.Redirect("~/User/Index");
+    }
+    else
+    {
+        <!-- Current Login status -->
+        <h6>
+            Logged in as:
+            <font color="#DF691A">
+                <b>
+                    @Session["userName"].ToString()
+                </b>
+            </font>
+        </h6>
+    }
+}
+
+<style>
+    th{
+        background-color: rgba(50, 115, 220, 0.15);
+    }
+</style>
+<!doctype html>
+<html lang="en">
+<body>
+    <h3>Jobs</h3>
+    <p>
+        @Html.ActionLink("Create new job", "Create")
+    </p>
+
+    <form asp-controller="Jobs" asp-action="Index">
+        <p>
+            Job ID : <input type="text" name="searchString" />
+            <input type="submit" value="Filter" />
+        </p>
+    </form>
+
+    <table class="table table-hover table-bordered table-active table-primary">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.jobID)</th>
+                <th>@Html.DisplayNameFor(model => model.JobTitle) </th>
+                <th>@Html.DisplayNameFor(model => model.fromDate)</th>
+                <th>@Html.DisplayNameFor(model => model.untilDate)</th>
+                <th>@Html.DisplayNameFor(model => model.PONum)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.jobID)</td>
+                    <td>@Html.DisplayFor(modelItem => item.JobTitle)</td>
+                    <td>@Html.DisplayFor(modelItem => item.fromDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.untilDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PONum)</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.jobID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.jobID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.jobID })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
